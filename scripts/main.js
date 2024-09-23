@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Cargar productos desde el archivo JSON
+
     fetch('data/products.json')
         .then(response => {
             if (!response.ok) {
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 productList.appendChild(productDiv);
             });
 
-            // Agregar eventos a los botones de agregar al carrito
+            
             const buttons = document.querySelectorAll('.product button');
             buttons.forEach(button => {
                 button.addEventListener('click', addToCart);
@@ -30,13 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error al cargar los productos:', error));
 
-    // Mostrar el carrito al hacer clic en "Ver Carrito"
+    
     document.getElementById('view-cart').addEventListener('click', () => {
         document.getElementById('cart-modal').style.display = 'block';
         displayCart(); // Mostrar el contenido del carrito
     });
 
-    // Cerrar el carrito al hacer clic en "Cerrar"
     document.getElementById('close-cart').addEventListener('click', () => {
         document.getElementById('cart-modal').style.display = 'none';
     });

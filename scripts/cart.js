@@ -1,12 +1,12 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// Actualizar la cantidad de productos en el carrito
+
 function updateCartCount() {
     const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     document.getElementById('view-cart').textContent = `Ver Carrito (${cartCount})`;
 }
 
-// Agregar producto al carrito con cantidad
+
 function addToCart(event) {
     const productId = event.target.getAttribute('data-id');
     const quantityInput = document.querySelector(`.quantity[data-id="${productId}"]`);
@@ -15,10 +15,10 @@ function addToCart(event) {
     const productExists = cart.find(item => item.id === productId);
 
     if (productExists) {
-        // Si el producto ya está en el carrito, sumar la cantidad
+        
         productExists.quantity += quantity;
     } else {
-        // Si no está en el carrito, agregarlo con la cantidad seleccionada
+        
         cart.push({ id: productId, quantity: quantity });
     }
 
@@ -26,11 +26,10 @@ function addToCart(event) {
     updateCartCount();
 }
 
-// Mostrar el contenido del carrito con miniaturas
+
 function displayCart() {
     const cartList = document.getElementById('cart-list');
-    cartList.innerHTML = ''; // Limpiar el carrito antes de mostrarlo
-
+    cartList.innerHTML = ''; 
     if (cart.length === 0) {
         cartList.innerHTML = '<p>El carrito está vacío.</p>';
         return;
@@ -39,7 +38,7 @@ function displayCart() {
     let total = 0;
     let productsProcessed = 0;
 
-    // Cargar productos del carrito
+    
     cart.forEach(item => {
         fetch('data/products.json')
             .then(response => response.json())
@@ -59,7 +58,7 @@ function displayCart() {
 
                 productsProcessed++;
 
-                // Mostrar total y botón de compra cuando todos los productos estén cargados
+                
                 if (productsProcessed === cart.length) {
                     const totalDiv = document.createElement('div');
                     totalDiv.innerHTML = `<strong>Total: ${total.toFixed(2)} €</strong>`;
@@ -70,7 +69,7 @@ function displayCart() {
                     buyButton.addEventListener('click', completePurchase);
                     cartList.appendChild(buyButton);
 
-                    // Añadir eventos para eliminar productos
+                    
                     const removeButtons = document.querySelectorAll('.remove');
                     removeButtons.forEach(button => {
                         button.addEventListener('click', removeFromCart);
@@ -80,23 +79,20 @@ function displayCart() {
     });
 }
 
-// Eliminar producto del carrito
+
 function removeFromCart(event) {
     const productId = event.target.dataset.id;
     cart = cart.filter(item => item.id !== productId);
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    displayCart(); // Actualizar la visualización del carrito
+    displayCart(); 
 }
 
-// Completar la compra
+
 function completePurchase() {
     alert('Gracias por tu compra!');
-    cart = []; // Vaciar el carrito
+    cart = []; 
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    displayCart(); // Actualizar la visualización del carrito
-}
-
-// Actualizar el contador del carrito al cargar la página
+    displayCart(); }
 document.addEventListener('DOMContentLoaded', updateCartCount);

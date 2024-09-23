@@ -48,7 +48,7 @@ button {
 }
 
 #cart-list {
-    max-height: 300px; /* Limitar la altura del área de productos */
+    max-height: 300px; 
     overflow-y: auto;
 }
 
